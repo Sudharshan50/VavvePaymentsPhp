@@ -1,6 +1,6 @@
 <?php
 
-namespace Paymentsample\Test;
+namespace Paymentsample\vavve;
 use JsonSerializable;
 class PaymentResponse implements JsonSerializable{
     private int $paymentTransactionId;

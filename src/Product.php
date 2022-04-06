@@ -1,6 +1,6 @@
 <?php
 
-namespace Paymentsample\Test;
+namespace Paymentsample\vavve;
 use JsonSerializable;
 
 class Product implements JsonSerializable{

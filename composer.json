@@ -1,11 +1,11 @@
 {
-    "name": "paymentsample/test",
+    "name": "paymentsample/vavve",
     "description": "payment",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Paymentsample\\Test\\": "src/"
+            "Paymentsample\\vavve\\": "src/"
         }
     },
     "authors": [

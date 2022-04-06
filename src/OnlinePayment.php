@@ -1,6 +1,6 @@
 <?php
 
-namespace Paymentsample\Test;
+namespace Paymentsample\vavve;
 
 class OnlinePayment
 {

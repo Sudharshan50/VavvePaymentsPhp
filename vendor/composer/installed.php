@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
-        'name' => 'paymentsample/test',
+        'reference' => 'edaebf9f12da212a88ee3c95232cffdbcaa078da',
+        'name' => 'paymentsample/vavve',
         'dev' => true,
     ),
     'versions' => array(
-        'paymentsample/test' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+        'paymentsample/vavve' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'edaebf9f12da212a88ee3c95232cffdbcaa078da',
             'dev_requirement' => false,
         ),
     ),
