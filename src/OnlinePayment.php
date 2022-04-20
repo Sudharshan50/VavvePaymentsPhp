@@ -2,18 +2,75 @@
 
 namespace Paymentsample\vavve;
 
+const paymentUrl = "http://164.90.146.112:8062";
+
 class OnlinePayment
 {
-    public function get_payment()
+    
+    public function get_payment(string $apiKey, string $apiSecret,string $merchantId,int $transactionId)
     {
-        return null;
+        $curl = curl_init();
+        $url = paymentUrl + "/merchant/" + $merchantId + "/payments/cards/" + $transactionId;
+
+        $header = [
+            "Content-Type:application/json",
+            "X-API-KEY:$apiKey",
+            "X-API-SECRET:$apiSecret"
+        ];
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HEADER => true,
+            CURLOPT_HTTPHEADER => $header
+        ]);
+
+        $response = curl_exec($curl);
+
+        $response = substr($response, strripos($response, "{"), strlen($response));
+
+        $cardTransactionDetail[] = new CardTransactionDetails();
+
+        $cardTransactionDetail[]->jsonToObject(json_decode($response));
+
+        return $cardTransactionDetail;
     }
+
+    public function get_payment_list(string $apiKey, string $apiSecret,string $merchantId,string $createDate): array
+    {
+        $curl = curl_init();
+        $url = paymentUrl + "/merchant/" + $merchantId + "/payments/cards?createdDate="+$createDate;
+
+        $header = [
+            "Content-Type:application/json",
+            "X-API-KEY:$apiKey",
+            "X-API-SECRET:$apiSecret"
+        ];
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HEADER => true,
+            CURLOPT_HTTPHEADER => $header
+        ]);
+
+        $response = curl_exec($curl);
+
+        $response = substr($response, strripos($response, "{"), strlen($response));
+
+        $cardTransactionDetail[] = new CardTransactionDetails();
+
+        $cardTransactionDetail[]->jsonToObject(json_decode($response));
+
+        return $cardTransactionDetail;
+    }   
 
     public function authorize_payment(MessageLayer $messageLayer, string $apiKey, string $apiSecret): PaymentResponse
     {
-        $onlinePayment = new OnlinePayment();
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/authorize";
+        $url = paymentUrl+"/payments/authorize";
 
         $header = [
             "Content-Type:application/json",
@@ -50,7 +107,7 @@ class OnlinePayment
     public function capture_payment(CapturePayment $capturePayment, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/capture";
+        $url = paymentUrl+"/payments/capture";
 
         $header = [
             "Content-Type:application/json",
@@ -81,7 +138,7 @@ class OnlinePayment
     public function authorize_and_capture_payment(MessageLayer $messageLayer, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/authorizeandcapture";
+        $url = paymentUrl+"/payments/authorizeandcapture";
 
         $header = [
             "Content-Type:application/json",
@@ -118,7 +175,7 @@ class OnlinePayment
     public function refund_authorize_payment(RefundPayment $refundPayment, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/authorize/" + $refundPayment->paymentTransactionId + "/refund";
+        $url = paymentUrl+"/payments/authorize/" + $refundPayment->paymentTransactionId + "/refund";
 
         $header = [
             "Content-Type:application/json",
@@ -149,7 +206,7 @@ class OnlinePayment
     public function refund_capture_payment(RefundPayment $refundPayment, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/capture/" + $refundPayment->paymentTransactionId + "/refund";
+        $url = paymentUrl+"/payments/capture/" + $refundPayment->paymentTransactionId + "/refund";
 
         $header = [
             "Content-Type:application/json",
@@ -180,7 +237,7 @@ class OnlinePayment
     public function void_authorize_payment(VoidPayment $voidPayment, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/authorize/" + $voidPayment->paymentTransactionId + "/void";
+        $url = paymentUrl+"/payments/authorize/" + $voidPayment->paymentTransactionId + "/void";
 
         $header = [
             "Content-Type:application/json",
@@ -211,7 +268,7 @@ class OnlinePayment
     public function void_capture_payment(VoidPayment $voidPayment, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/capture/" + $voidPayment->paymentTransactionId + "/void";
+        $url = paymentUrl+":8062/payments/capture/" + $voidPayment->paymentTransactionId + "/void";
 
         $header = [
             "Content-Type:application/json",
@@ -242,7 +299,7 @@ class OnlinePayment
     public function void_refund_payment(VoidPayment $voidPayment, string $apiKey, string $apiSecret): PaymentResponse
     {
         $curl = curl_init();
-        $url = "http://164.90.146.112:8062/payments/authorize/" + $voidPayment->paymentTransactionId + "/voidrefund";
+        $url = paymentUrl+"/payments/authorize/" + $voidPayment->paymentTransactionId + "/voidrefund";
 
         $header = [
             "Content-Type:application/json",
