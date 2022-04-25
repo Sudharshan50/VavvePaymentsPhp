@@ -28,11 +28,11 @@ class OnlinePayment
 
         $response = curl_exec($curl);
 
-        $response = substr($response, strripos($response, "{"), strlen($response));
+        $response = substr($response, strpos($response, "{"), strlen($response));
 
-        $cardTransactionDetail[] = new CardTransactionDetails();
+        $cardTransactionDetail = new CardTransactionDetails();
 
-        $cardTransactionDetail[]->jsonToObject(json_decode($response));
+        $cardTransactionDetail->jsonToObject(json_decode($response));
 
         return $cardTransactionDetail;
     }
@@ -40,7 +40,7 @@ class OnlinePayment
     public function get_payment_list(string $apiKey, string $apiSecret,string $merchantId,string $createDate): array
     {
         $curl = curl_init();
-        $url = paymentUrl."/merchant/".$merchantId."/payments/cards?createdDate=".$createDate;
+        $url = paymentUrl."/merchant/".$merchantId."/payments/cards?createdDate=".urlencode($createDate);
 
         $header = [
             "Content-Type:application/json",
@@ -58,12 +58,12 @@ class OnlinePayment
 
         $response = curl_exec($curl);
 
-        $response = substr($response, strripos($response, "{"), strlen($response));
+        $response = substr($response, strpos($response, "{"), strlen($response));
 
         $cardTransactionDetail[] = new CardTransactionDetails();
 
-        $cardTransactionDetail[]->jsonToObject(json_decode($response));
-
+        $cardTransactionDetail = (array) json_decode(json_encode($response), true);
+        
         return $cardTransactionDetail;
     }   
 
